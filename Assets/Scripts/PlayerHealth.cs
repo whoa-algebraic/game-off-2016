@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets._2D;
 
 namespace WhoaAlgebraic
 {
@@ -16,7 +17,7 @@ namespace WhoaAlgebraic
 
         Animator anim;                                              // Reference to the Animator component.
         AudioSource playerAudio;                                    // Reference to the AudioSource component.
-        PlayerMovement playerMovement;                              // Reference to the player's movement.
+        Platformer2DUserControl playerMovement;                              // Reference to the player's movement.
         PlayerShooting playerShooting;                              // Reference to the PlayerShooting script.
         bool isDead;                                                // Whether the player is dead.
         bool damaged;                                               // True when the player gets damaged.
@@ -27,7 +28,7 @@ namespace WhoaAlgebraic
             // Setting up the references.
             anim = GetComponent<Animator>();
             playerAudio = GetComponent<AudioSource>();
-            playerMovement = GetComponent<PlayerMovement>();
+            playerMovement = GetComponent<Platformer2DUserControl>();
             playerShooting = GetComponentInChildren<PlayerShooting>();
 
             // Set the initial health of the player.
