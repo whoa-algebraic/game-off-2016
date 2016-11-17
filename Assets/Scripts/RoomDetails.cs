@@ -5,6 +5,7 @@ public class RoomDetails : MonoBehaviour {
     private List<GameObject> Doors;
 
     void Start() {
+        Doors = new List<GameObject>();
         int doorIndex = 0;
 
         for(int i = 0; i < transform.childCount; i++) {
