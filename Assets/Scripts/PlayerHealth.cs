@@ -18,7 +18,7 @@ namespace WhoaAlgebraic
         Animator anim;                                              // Reference to the Animator component.
         AudioSource playerAudio;                                    // Reference to the AudioSource component.
         Platformer2DUserControl playerMovement;                              // Reference to the player's movement.
-        PlayerShooting playerShooting;                              // Reference to the PlayerShooting script.
+        //PlayerShooting playerShooting;                              // Reference to the PlayerShooting script.
         bool isDead;                                                // Whether the player is dead.
         bool damaged;                                               // True when the player gets damaged.
 
@@ -29,11 +29,10 @@ namespace WhoaAlgebraic
             anim = GetComponent<Animator>();
             playerAudio = GetComponent<AudioSource>();
             playerMovement = GetComponent<Platformer2DUserControl>();
-            playerShooting = GetComponentInChildren<PlayerShooting>();
+            //playerShooting = GetComponentInChildren<PlayerShooting>();
 
             // Set the initial health of the player.
             currentHealth = startingHealth;
-            healthSlider.value = currentHealth;
         }
 
 
@@ -86,7 +85,7 @@ namespace WhoaAlgebraic
             isDead = true;
 
             // Turn off any remaining shooting effects.
-            playerShooting.DisableEffects();
+            //playerShooting.DisableEffects();
 
             // Tell the animator that the player is dead.
             anim.SetTrigger("Die");
@@ -97,7 +96,7 @@ namespace WhoaAlgebraic
 
             // Turn off the movement and shooting scripts.
             playerMovement.enabled = false;
-            playerShooting.enabled = false;
+            //playerShooting.enabled = false;
         }
     }
 }
