@@ -70,6 +70,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000011657583942}
   - 114: {fileID: 114000011448016126}
+  - 114: {fileID: 114000012539353450}
   m_Layer: 0
   m_Name: room001
   m_TagString: Untagged
@@ -265,6 +266,17 @@ MonoBehaviour:
   ExportScale: 0.0078125
   MapWidthInPixels: 4096
   MapHeightInPixels: 4096
+--- !u!114 &114000012539353450
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013395496384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c386b8c54af8e0048b0eb29b49518099, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114000012871065078
 MonoBehaviour:
   m_ObjectHideFlags: 1
