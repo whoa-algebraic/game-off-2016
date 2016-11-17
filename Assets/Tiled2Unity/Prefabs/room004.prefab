@@ -11,6 +11,23 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1000013781302996}
   m_IsPrefabParent: 1
+--- !u!1 &1000010362064454
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 4000012548911576}
+  - 114: {fileID: 114000011027074156}
+  - 61: {fileID: 61000014041795558}
+  m_Layer: 0
+  m_Name: door
+  m_TagString: door
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1000010667194872
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,6 +121,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4000013934870880}
   m_RootOrder: 0
+--- !u!4 &4000012548911576
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010362064454}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 16, y: -47.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4000014261446928}
+  m_RootOrder: 1
 --- !u!4 &4000013934870880
 Transform:
   m_ObjectHideFlags: 1
@@ -131,6 +161,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000013934870880}
+  - {fileID: 4000012548911576}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!23 &23000012999568602
@@ -251,6 +282,20 @@ PolygonCollider2D:
       - {x: 13.99219, y: -47.57813}
       - {x: 13.99219, y: -47}
       - {x: 0.984375, y: -47}
+--- !u!61 &61000014041795558
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010362064454}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 3, y: 1}
 --- !u!114 &114000010420378532
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -262,6 +307,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c386b8c54af8e0048b0eb29b49518099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114000011027074156
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010362064454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a17f3e5f43f60a145b4acbfdcecc1c4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: 0
 --- !u!114 &114000011878277324
 MonoBehaviour:
   m_ObjectHideFlags: 1
