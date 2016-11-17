@@ -70,6 +70,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000014261446928}
   - 114: {fileID: 114000013395521652}
+  - 114: {fileID: 114000010420378532}
   m_Layer: 0
   m_Name: room004
   m_TagString: Untagged
@@ -250,6 +251,17 @@ PolygonCollider2D:
       - {x: 13.99219, y: -47.57813}
       - {x: 13.99219, y: -47}
       - {x: 0.984375, y: -47}
+--- !u!114 &114000010420378532
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013781302996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c386b8c54af8e0048b0eb29b49518099, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114000011878277324
 MonoBehaviour:
   m_ObjectHideFlags: 1
