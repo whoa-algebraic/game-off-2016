@@ -16,10 +16,13 @@ public class CameraFollowPlayer : MonoBehaviour {
     private float maxBottom;
 
     void Start() {
-        maxLeft = mapTileHorizontalUnits * (unitSize * -1f) + horizontalEdgeBuffer;
-        maxRight = mapTileHorizontalUnits * unitSize - horizontalEdgeBuffer;
-        maxTop = mapTileVerticalUnits * unitSize - verticalEdgeBuffer;
-        maxBottom = mapTileVerticalUnits * (unitSize * -1f) + verticalEdgeBuffer;
+        float startingRoomWidth = Managers.RoomNavigationManager.GetActiveRoomWidth();
+        float startingRoomHeight = Managers.RoomNavigationManager.GetActiveRoomHeight();
+
+        maxLeft = ((startingRoomWidth / 2) * -1) + horizontalEdgeBuffer;
+        maxRight = (startingRoomWidth / 2) - horizontalEdgeBuffer;
+        maxTop = (startingRoomHeight / 2) - verticalEdgeBuffer;
+        maxBottom = ((startingRoomHeight / 2) * -1) + verticalEdgeBuffer;
     }
         
 	void Update () {
