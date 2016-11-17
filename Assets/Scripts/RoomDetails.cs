@@ -2,8 +2,6 @@
 using UnityEngine;
 
 public class RoomDetails : MonoBehaviour {
-    public int HorizontalSize;
-    public int VerticalSize;
     private List<GameObject> Doors;
 
     void Start() {
