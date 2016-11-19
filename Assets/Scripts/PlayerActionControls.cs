@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class PlayerActionControls : MonoBehaviour {
+
+	public Limb Limb1;
 	
 	void Update () {
 		if(Input.GetButtonDown("Action1")) {
 			Debug.Log("Action1 button pressed");
+			Limb1.Activate();
 		}
 
 		if (Input.GetButtonDown("Action2")) {
