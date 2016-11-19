@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class Limb : MonoBehaviour {
+public class Limb {
+
 	public float coolDown;
 
 	private bool isDisabled;
@@ -16,7 +17,7 @@ public class Limb : MonoBehaviour {
 		return true;
 	}
 
-	void Update() {
+	public void HandleCooldown() {
 		if(!isDisabled) { return; }
 
 		CDTimer += Time.deltaTime;
@@ -26,5 +27,5 @@ public class Limb : MonoBehaviour {
 			Debug.Log("cooldown reached, action no longer disabled");
 		}
 	}
-}
 
+}
