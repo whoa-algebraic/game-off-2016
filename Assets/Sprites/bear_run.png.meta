@@ -1,0 +1,269 @@
+fileFormatVersion: 2
+guid: bfe8ba8081a8be94f9aacaa63e8fde25
+timeCreated: 1479613871
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: bear_run_0
+    21300002: bear_run_1
+    21300004: bear_run_2
+    21300006: bear_run_3
+    21300008: bear_run_4
+    21300010: bear_run_5
+    21300012: bear_run_6
+    21300014: bear_run_7
+    21300016: bear_run_8
+    21300018: bear_run_9
+    21300020: bear_run_10
+    21300022: bear_run_11
+    21300024: bear_run_12
+    21300026: bear_run_13
+    21300028: bear_run_14
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 350
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: bear_run_0
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 860
+        width: 1017
+        height: 696
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bear_run_1
+      rect:
+        serializedVersion: 2
+        x: 1540
+        y: 805
+        width: 1022
+        height: 741
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bear_run_2
+      rect:
+        serializedVersion: 2
+        x: 2834
+        y: 820
+        width: 1018
+        height: 721
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bear_run_3
+      rect:
+        serializedVersion: 2
+        x: 4124
+        y: 830
+        width: 1023
+        height: 709
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bear_run_4
+      rect:
+        serializedVersion: 2
+        x: 5414
+        y: 835
+        width: 1023
+        height: 706
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bear_run_5
+      rect:
+        serializedVersion: 2
+        x: 6704
+        y: 835
+        width: 1028
+        height: 721
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bear_run_6
+      rect:
+        serializedVersion: 2
+        x: 7954
+        y: 825
+        width: 1068
+        height: 741
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bear_run_7
+      rect:
+        serializedVersion: 2
+        x: 9219
+        y: 830
+        width: 1093
+        height: 741
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bear_run_8
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 43
+        width: 1138
+        height: 721
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bear_run_9
+      rect:
+        serializedVersion: 2
+        x: 1388
+        y: 33
+        width: 1179
+        height: 711
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bear_run_10
+      rect:
+        serializedVersion: 2
+        x: 2623
+        y: 3
+        width: 1229
+        height: 736
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bear_run_11
+      rect:
+        serializedVersion: 2
+        x: 3893
+        y: 18
+        width: 1244
+        height: 726
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bear_run_12
+      rect:
+        serializedVersion: 2
+        x: 5248
+        y: 38
+        width: 1179
+        height: 711
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bear_run_13
+      rect:
+        serializedVersion: 2
+        x: 6644
+        y: 43
+        width: 1073
+        height: 711
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bear_run_14
+      rect:
+        serializedVersion: 2
+        x: 7990
+        y: 54
+        width: 1017
+        height: 700
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
