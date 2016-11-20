@@ -4,17 +4,16 @@ public class Limb : MonoBehaviour {
 
 	public float coolDown;
 	public float activeDuration;
-
-	private SpriteRenderer sprite;
+	
 	private BoxCollider2D col;
+	private Animator m_Anim;
 	private bool isActive;
 	private bool isDisabled;
 	private float CDTimer;
 
 	void Start() {
-		sprite = GetComponent<SpriteRenderer>();
 		col = GetComponent<BoxCollider2D>();
-		sprite.enabled = false;
+		m_Anim = transform.parent.GetComponent<Animator>();
 		col.enabled = false;
 		isActive = false;
 		isDisabled = false;
@@ -23,9 +22,10 @@ public class Limb : MonoBehaviour {
 	public virtual bool Activate() { // must return a bool so that inheriting class can escape if on cool down
 		if(isDisabled) { return false; }
 
-		toggleSpriteAndCollider();
+		toggleCollider();
 		isActive = true;
 		isDisabled = true;
+		m_Anim.SetBool("Attacking", true);
 		CDTimer = 0;
 
 		Debug.Log("Limb Activate called");
@@ -52,13 +52,13 @@ public class Limb : MonoBehaviour {
 		if(!isActive) { return; }
 
 		if(CDTimer >= activeDuration) { // using CDTimer rather than introducing new time for now
-			toggleSpriteAndCollider();
+			toggleCollider();
 			isActive = false;
+			m_Anim.SetBool("Attacking", false);
 		}
 	}
 
-	private void toggleSpriteAndCollider() {
-		sprite.enabled = !sprite.enabled;
+	private void toggleCollider() {
 		col.enabled = !col.enabled;
 	}
 

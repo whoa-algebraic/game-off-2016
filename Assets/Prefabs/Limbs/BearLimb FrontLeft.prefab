@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coolDown: 1
-  activeDuration: 1
+  activeDuration: 0.1
 --- !u!212 &212000013547240214
 SpriteRenderer:
   m_ObjectHideFlags: 1
