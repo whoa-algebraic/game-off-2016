@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7442b6f29a6ec54199cfb289280fcdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coolDown: 5
+  coolDown: 1
   activeDuration: 1
 --- !u!212 &212000013547240214
 SpriteRenderer:
