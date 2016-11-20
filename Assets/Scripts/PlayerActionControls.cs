@@ -1,22 +1,21 @@
 ﻿using UnityEngine;
 
 public class PlayerActionControls : MonoBehaviour {
-	private Limb[] limbs;
+	public GameObject BearLimbPrefab; // TODO make LimbPrefabManager
+	private GameObject[] limbs;
 
 	void Start() {
-		limbs = new Limb[4];
-		limbs[0] = new BearLimb();
-		limbs[1] = new BearLimb();
-		limbs[2] = new BearLimb();
-		limbs[3] = new BearLimb();
+		limbs = new GameObject[1];
+		limbs[0] = Instantiate(BearLimbPrefab);
+		limbs[0].transform.SetParent(this.transform);
+		limbs[0].transform.localPosition = Vector3.zero;
+		limbs[0].transform.localScale = Vector3.one;
 	}
 
 	void Update () {
-		handleCooldowns();
-
 		if (Input.GetButtonDown("Action1")) {
 			Debug.Log("Action1 button pressed");
-			limbs[0].Activate();
+			limbs[0].GetComponent<Limb>().Activate();
 		}
 
 		if (Input.GetButtonDown("Action2")) {
@@ -29,12 +28,6 @@ public class PlayerActionControls : MonoBehaviour {
 
 		if (Input.GetButtonDown("Action4")) {
 			Debug.Log("Action4 button pressed");
-		}
-	}
-
-	void handleCooldowns() {
-		foreach(Limb limb in limbs) {
-			limb.HandleCooldown();
 		}
 	}
 
