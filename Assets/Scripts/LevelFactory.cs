@@ -16,14 +16,16 @@ public class LevelFactory : MonoBehaviour {
 	LevelGenerator generator;
 
 	void Start() {
-		GenerateRooms (Managers.RoomNavigationManager.RoomPrefabs);
-		generator = new LevelGenerator (startingPoint, templates, roomCount);
-		generator.GenerateMap ();
-		DrawMap ();
 	}
 
 	void Update() {
 		if (Input.GetKeyDown ("tab")) {
+			if (generator == null) {
+				GenerateRooms (Managers.RoomNavigationManager.RoomPrefabs);
+				generator = new LevelGenerator (startingPoint, templates, roomCount);
+				generator.GenerateMap ();
+				DrawMap ();
+			}
 			foreach (LineRenderer renderer in mapLineRenderers) {
 				renderer.enabled = true;
 			}
@@ -40,7 +42,7 @@ public class LevelFactory : MonoBehaviour {
 		for (int i = 0; i < prefabs.Length; i++) {
 			templates [i] = new Room (prefabs[i]);
 		}
-		startingPoint = templates [0];
+		startingPoint = templates [0].clone();
 	}
 
 	void DrawMap() {
@@ -48,32 +50,36 @@ public class LevelFactory : MonoBehaviour {
 	}
 
 	void DrawRoom(Room room) {
-		if (drawnRoomIds.Contains(room.roomId)) {
-			return;
+		if (room.roomId == 0) {
+			room.roomId = drawnRoomIds.Count + 1;
+		} else {
+			if (drawnRoomIds.Contains (room.roomId)) {
+				return;
+			}
 		}
 		drawnRoomIds.Add (room.roomId);
 
 		DrawLine (
-			new Vector3 (room.LeftX(), startingPoint.TopY(), 0), 
-			new Vector3 (room.LeftX(), startingPoint.BottomY(), 0), 
+			new Vector3 (room.LeftX(), room.TopY(), 0), 
+			new Vector3 (room.LeftX(), room.BottomY(), 0), 
 			Color.gray
 		); 
 
 		DrawLine (
-			new Vector3 (room.RightX(), startingPoint.TopY(), 0), 
-			new Vector3 (room.RightX(), startingPoint.BottomY(), 0), 
+			new Vector3 (room.RightX(), room.TopY(), 0), 
+			new Vector3 (room.RightX(), room.BottomY(), 0), 
 			Color.gray
 		); 
 
 		DrawLine (
-			new Vector3 (room.LeftX(), startingPoint.TopY(), 0), 
-			new Vector3 (room.RightX(), startingPoint.TopY(), 0), 
+			new Vector3 (room.LeftX(), room.TopY(), 0), 
+			new Vector3 (room.RightX(), room.TopY(), 0), 
 			Color.gray
 		); 
 
 		DrawLine (
-			new Vector3 (room.LeftX(), startingPoint.BottomY(), 0), 
-			new Vector3 (room.RightX(), startingPoint.BottomY(), 0), 
+			new Vector3 (room.LeftX(), room.BottomY(), 0), 
+			new Vector3 (room.RightX(), room.BottomY(), 0), 
 			Color.gray
 		); 
 
@@ -87,14 +93,14 @@ public class LevelFactory : MonoBehaviour {
 				int doorEndY = doorStartY;
 
 				if (door.x == 0 || door.x == room.width) {
-					doorEndX += 5;
+					doorEndY += 2;
 				} else {
-					doorEndY += 5;
+					doorEndX += 2;
 				}
 
 				DrawLine (
-					new Vector3 (doorStartX, doorStartY, 0), 
-					new Vector3 (doorEndX, doorEndY, 0), 
+					new Vector3 (doorStartX, doorStartY, -1), 
+					new Vector3 (doorEndX, doorEndY, -1), 
 					Color.green
 				); 
 
@@ -105,6 +111,9 @@ public class LevelFactory : MonoBehaviour {
 
 	void DrawLine(Vector3 start, Vector3 end, Color color)
 	{
+		start.y = -start.y;
+		end.y = -end.y;
+
 		start.Scale(new Vector3(0.1f, 0.1f, 1f));
 		end.Scale(new Vector3(0.1f, 0.1f, 1f));
 

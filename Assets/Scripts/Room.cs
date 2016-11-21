@@ -19,6 +19,9 @@ public class Room {
 
 	public GameObject prefab;
 
+	Room() {
+	} 
+
 	public Room(GameObject _prefab) {
 		doorsWithConnection = new HashSet<Door>();
 		doorsWithoutConnection = new HashSet<Door>();
@@ -35,8 +38,10 @@ public class Room {
 		foreach(GameObject doorObject in prefabDoors) {
 			Door door = new Door(
 				i,
-				((int) doorObject.transform.localPosition.x) + (width / 2),
-				((int) doorObject.transform.localPosition.y) + (height / 2)
+				((int) doorObject.transform.localPosition.x),
+				-((int) doorObject.transform.localPosition.y),
+				width,
+				height
 			);
 			doors[i] = door;
 			doorsWithoutConnection.Add(door);
@@ -71,14 +76,30 @@ public class Room {
 	}
 
 	public int BottomY() {
-		return startX + height;
+		return startY + height;
 	}
 		
+	public Room clone() {
+		Room room = new Room ();
+		room.doors = new Dictionary<int, Door> ();
+		int i = 1;
+		foreach (Door door in doors.Values) {
+			room.doors[i] = door;
+			i++;
+		}
+		room.doorsWithConnection = new HashSet<Door>();
+		room.doorsWithoutConnection = new HashSet<Door>();
+		room.width = width;
+		room.height = height;
+
+		return room;
+	}
 
 	public static void ConnectDoors(Room room, Door door, Room newRoom, Door otherDoor) {
 		if (room.doorsWithConnection.Contains (door)) {
 			throw new Exception ("Door is already connected to an other room");
 		}
+		Debug.Log ("Connecting " + room + " with " + newRoom);
 		door.connectedRoom = newRoom;
 		door.connectedDoorId = otherDoor.doorId;
 
@@ -91,9 +112,6 @@ public class Room {
 		newRoom.startX = room.startX + door.x - otherDoor.x;
 		newRoom.startY = room.startY + door.y - otherDoor.y;			
 
-		if (newRoom.roomId == 0) {
-			newRoom.roomId = room.roomId + 1;
-		}
 	}
 
 	public static bool AreRoomsOverlapping(Room room1, Room room2) {
