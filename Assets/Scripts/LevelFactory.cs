@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System;
 
 public class LevelFactory : MonoBehaviour {
 
 	public int roomCount;
 	Room startingPoint;
 	Room[] templates;
+	List<Room> rooms;
 
 	List<LineRenderer> mapLineRenderers = new List<LineRenderer>();
 	HashSet<int> drawnRoomIds = new HashSet<int> ();
@@ -23,7 +25,8 @@ public class LevelFactory : MonoBehaviour {
 			if (generator == null) {
 				GenerateRooms (Managers.RoomNavigationManager.RoomPrefabs);
 				generator = new LevelGenerator (startingPoint, templates, roomCount);
-				generator.GenerateMap ();
+				rooms = generator.GenerateMap ().rooms;
+				startingPoint = rooms [0];
 				DrawMap ();
 			}
 			foreach (LineRenderer renderer in mapLineRenderers) {
@@ -50,12 +53,8 @@ public class LevelFactory : MonoBehaviour {
 	}
 
 	void DrawRoom(Room room) {
-		if (room.roomId == 0) {
-			room.roomId = drawnRoomIds.Count + 1;
-		} else {
-			if (drawnRoomIds.Contains (room.roomId)) {
-				return;
-			}
+		if (drawnRoomIds.Contains (room.roomId)) {
+			return;
 		}
 		drawnRoomIds.Add (room.roomId);
 
@@ -104,7 +103,7 @@ public class LevelFactory : MonoBehaviour {
 					Color.green
 				); 
 
-				DrawRoom (door.connectedRoom);
+				DrawRoom (GetRoom(door.connectedRoomId));
 			}
 		}
 	}
@@ -131,4 +130,13 @@ public class LevelFactory : MonoBehaviour {
 		mapLineRenderers.Add (lr);
 	}
 
+
+	Room GetRoom(int roomId) {
+		for (int i = 0; i < rooms.Count; i++) {
+			if (rooms [i].roomId == roomId) {
+				return rooms [i];
+			}
+		}
+		throw new Exception ("Room " + roomId + " not found");
+	}
 }
