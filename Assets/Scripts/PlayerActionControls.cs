@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 
 public class PlayerActionControls : MonoBehaviour {
-	public GameObject BearLimbPrefab; // TODO make LimbPrefabManager
 	private GameObject[] limbs;
 
 	void Start() {
-		limbs = new GameObject[1];
-		limbs[0] = Instantiate(BearLimbPrefab);
+		limbs = new GameObject[4];
+		limbs[0] = Instantiate(Managers.LimbManager.LimbPrefabs[0]);
 		limbs[0].transform.SetParent(this.transform);
 		limbs[0].transform.localPosition = Vector3.zero;
 		limbs[0].transform.localScale = Vector3.one;
