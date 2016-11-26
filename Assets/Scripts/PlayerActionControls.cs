@@ -4,14 +4,15 @@ public class PlayerActionControls : MonoBehaviour {
 	private GameObject[] limbs;
 
 	void Start() {
-		GameObject bearLimbPrefab = Managers.LimbManager.LimbPrefabs[0];
+		GameObject bearFrontLimbPrefab = Managers.LimbManager.LimbPrefabs[0];
+		GameObject bearBackLimbPrefab = Managers.LimbManager.LimbPrefabs[1];
 
 		limbs = new GameObject[4];
 		
-		limbs[0] = Instantiate(bearLimbPrefab);
-		limbs[1] = Instantiate(bearLimbPrefab);
-		limbs[2] = Instantiate(bearLimbPrefab);
-		limbs[3] = Instantiate(bearLimbPrefab);
+		limbs[0] = Instantiate(bearFrontLimbPrefab);
+		limbs[1] = Instantiate(bearFrontLimbPrefab);
+		limbs[2] = Instantiate(bearBackLimbPrefab);
+		limbs[3] = Instantiate(bearBackLimbPrefab);
 
 		foreach(GameObject limb in limbs) {
 			ConfigureLimbInstance(limb);
