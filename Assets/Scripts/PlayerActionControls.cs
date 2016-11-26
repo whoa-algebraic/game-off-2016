@@ -20,12 +20,12 @@ public class PlayerActionControls : MonoBehaviour {
 	}
 
 	void Update () {
-		if (Input.GetAxis("Action1") > 0) {
+		if (Input.GetAxis("Action1") > 0 || Input.GetButtonDown("Action1 Alt")) {
 			Debug.Log("Action1 button pressed");
 			limbs[0].GetComponent<Limb>().Activate();
 		}
 
-		if (Input.GetAxis("Action2") > 0) {
+		if (Input.GetAxis("Action2") > 0 || Input.GetButtonDown("Action2 Alt")) {
 			Debug.Log("Action2 button pressed");
 			limbs[1].GetComponent<Limb>().Activate();
 		}
