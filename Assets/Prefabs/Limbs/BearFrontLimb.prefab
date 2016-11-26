@@ -23,7 +23,7 @@ GameObject:
   - 61: {fileID: 61000012976006030}
   - 114: {fileID: 114000010326300556}
   m_Layer: 0
-  m_Name: BearLimb FrontLeft
+  m_Name: BearFrontLimb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
