@@ -20,6 +20,7 @@ public class PlayerActionControls : MonoBehaviour {
 	}
 
 	void Update () {
+        // right trigger
 		if (Input.GetAxis("Action1") > 0 || Input.GetButtonDown("Action1 Alt")) {
 			Debug.Log("Action1 button pressed");
 			limbs[0].GetComponent<Limb>().Activate();
