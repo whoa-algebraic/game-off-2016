@@ -15,9 +15,10 @@ public class Room {
 
 	public int startX = 0;
 	public int startY = 0;
-	bool inMap = false;
 
 	public GameObject prefab;
+
+	List<LineRenderer> mapLines = new List<LineRenderer> ();
 
 	Room() {
 	} 
@@ -47,10 +48,6 @@ public class Room {
 			doorsWithoutConnection.Add(door);
 			i ++;
 		}
-	}
-
-	public void SetAsStartingPoint() {
-		inMap = true;
 	}
 
 	public void SetDoorAsConnected(Door door) {
@@ -87,6 +84,18 @@ public class Room {
 		}
 		throw new Exception ("Door (" + doorId + ") not found");
 	}
+
+	public void AddMapLine(LineRenderer renderer) {
+		mapLines.Add(renderer);
+	}
+
+	public void SetRoomAsDiscovered() {
+		foreach (LineRenderer renderer in mapLines) {
+			renderer.enabled = true;
+		}
+	}
+
+
 		
 	public Room clone() {
 		Room room = new Room ();

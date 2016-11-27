@@ -58,32 +58,40 @@ public class LevelFactory : MonoBehaviour {
 		}
 		drawnRoomIds.Add (room.roomId);
 
-		DrawLine (
-			new Vector3 (room.LeftX(), room.TopY(), 0), 
-			new Vector3 (room.LeftX(), room.BottomY(), 0), 
-			Color.gray,
-			"Room (" + room.roomId + ") left wall"
+		room.AddMapLine (
+			DrawLine (
+				new Vector3 (room.LeftX (), room.TopY (), 0), 
+				new Vector3 (room.LeftX (), room.BottomY (), 0), 
+				Color.gray,
+				"Room (" + room.roomId + ") left wall"
+			)
+		);
+
+		room.AddMapLine (
+			DrawLine (
+				new Vector3 (room.RightX(), room.TopY(), 0), 
+				new Vector3 (room.RightX(), room.BottomY(), 0), 
+				Color.gray,
+				"Room (" + room.roomId + ") right wall"
+			)
 		); 
 
-		DrawLine (
-			new Vector3 (room.RightX(), room.TopY(), 0), 
-			new Vector3 (room.RightX(), room.BottomY(), 0), 
-			Color.gray,
-			"Room (" + room.roomId + ") right wall"
+		room.AddMapLine (
+			DrawLine (
+				new Vector3 (room.LeftX(), room.TopY(), 0), 
+				new Vector3 (room.RightX(), room.TopY(), 0), 
+				Color.gray,
+				"Room (" + room.roomId + ") top wall"
+			)
 		); 
 
-		DrawLine (
-			new Vector3 (room.LeftX(), room.TopY(), 0), 
-			new Vector3 (room.RightX(), room.TopY(), 0), 
-			Color.gray,
-			"Room (" + room.roomId + ") top wall"
-		); 
-
-		DrawLine (
-			new Vector3 (room.LeftX(), room.BottomY(), 0), 
-			new Vector3 (room.RightX(), room.BottomY(), 0), 
-			Color.gray,
-			"Room (" + room.roomId + ") bottom wall"
+		room.AddMapLine (
+			DrawLine (
+				new Vector3 (room.LeftX(), room.BottomY(), 0), 
+				new Vector3 (room.RightX(), room.BottomY(), 0), 
+				Color.gray,
+				"Room (" + room.roomId + ") bottom wall"
+			)
 		); 
 
 		for (int i = 0; i < room.doors.Count; i++) {
@@ -101,11 +109,13 @@ public class LevelFactory : MonoBehaviour {
 					doorEndX += 2;
 				}
 
-				DrawLine (
-					new Vector3 (doorStartX, doorStartY, -1), 
-					new Vector3 (doorEndX, doorEndY, -1), 
-					Color.green,
-					"Room (" + room.roomId + ") door (" + door.doorId + ")"
+				room.AddMapLine (
+					DrawLine (
+						new Vector3 (doorStartX, doorStartY, -1), 
+						new Vector3 (doorEndX, doorEndY, -1), 
+						Color.green,
+						"Room (" + room.roomId + ") door (" + door.doorId + ")"
+					)
 				); 
 
 				DrawRoom (GetRoom(door.connectedRoomId));
@@ -113,7 +123,7 @@ public class LevelFactory : MonoBehaviour {
 		}
 	}
 
-	void DrawLine(Vector3 start, Vector3 end, Color color, String name)	{
+	LineRenderer DrawLine(Vector3 start, Vector3 end, Color color, String name)	{
 		start.y = -start.y;
 		end.y = -end.y;
 
@@ -130,7 +140,10 @@ public class LevelFactory : MonoBehaviour {
 		lr.SetWidth(0.1f, 0.1f);
 		lr.SetPosition(0, start);
 		lr.SetPosition(1, end);
+		lr.enabled = false;
 		lr.useWorldSpace = false;
+
+		return lr;
 	}
 
 

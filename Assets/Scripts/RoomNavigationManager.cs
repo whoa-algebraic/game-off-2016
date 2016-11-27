@@ -82,7 +82,9 @@ public class RoomNavigationManager : MonoBehaviour {
 		float yPos = GetActiveRoomHeight() / 2;
 		activeRoomPrefab.transform.position = new Vector3(xPos * -1, yPos, 0);
 
-		Room activeRoom = map.activeRoom;
+		// put room in map overlay
+		map.activeRoom.SetRoomAsDiscovered();
+
 
 	}
 
