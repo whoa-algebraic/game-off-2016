@@ -26,7 +26,7 @@ public class AstarPath : MonoBehaviour {
 	 */
 	public static System.Version Version {
 		get {
-			return new System.Version(3, 8, 6);
+			return new System.Version(3, 8, 7);
 		}
 	}
 
