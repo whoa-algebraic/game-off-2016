@@ -4,7 +4,7 @@ using UnityEngine;
 public class RoomDetails : MonoBehaviour {
     private List<GameObject> Doors;
 
-    void Start() {
+    void Awake() {
         Doors = new List<GameObject>();
         int doorIndex = 1;
 

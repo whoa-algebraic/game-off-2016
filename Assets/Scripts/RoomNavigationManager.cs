@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Tiled2Unity;
+using System.Runtime.CompilerServices;
 
 public class RoomNavigationManager : MonoBehaviour {
     public GameObject PlayerGameObject;
@@ -11,10 +12,24 @@ public class RoomNavigationManager : MonoBehaviour {
 
     private GameObject activeRoomPrefab;
 
+	private bool inited = false;
+
     void Awake() {
-		map = GetComponent<LevelFactory> ().generate (RoomPrefabs);
-		SetActiveRoom (map.activeRoom.prefab);
-    }
+		init ();
+	}
+
+	[MethodImpl(MethodImplOptions.Synchronized)]
+	public void init() {
+		if (!inited) {
+			map = GetComponent<LevelFactory> ().generate (RoomPrefabs);
+			SetActiveRoom (map.activeRoom.prefab);
+			MapContainer.transform.Translate (new Vector3 (
+				-map.activeRoom.width / 2 * 0.05f,
+				map.activeRoom.height / 2 * 0.05f,
+				0
+			));
+		}
+	}
 
     // Change room prefab
     public void ChangeRoom(int doorId) {
@@ -50,6 +65,7 @@ public class RoomNavigationManager : MonoBehaviour {
 			adjustedDoorY += 4;
 		}
 		PlayerGameObject.transform.position = new Vector3(xPos + adjustedDoorX, yPos - adjustedDoorY, 0);
+		MoveMapOverlay (door, oldActiveRoom.width + map.activeRoom.width, oldActiveRoom.height + map.activeRoom.height);
     }
 
     public float GetActiveRoomWidth() {
@@ -67,17 +83,28 @@ public class RoomNavigationManager : MonoBehaviour {
 		activeRoomPrefab.transform.position = new Vector3(xPos * -1, yPos, 0);
 
 		Room activeRoom = map.activeRoom;
-		MapContainer.transform.position = new Vector3 (
-			-MapContainer.transform.position.x,
-			-MapContainer.transform.position.y,
-			0
-		);
-		MapContainer.transform.position = new Vector3 (
-			-(activeRoom.startX + activeRoom.width / 2) * 0.05f,
-			-(activeRoom.startY - activeRoom.height / 2) * 0.05f,
-			0
-		);
 
+	}
+
+	void MoveMapOverlay (Door door, int width, int height)	{
+		float x = width / 2;
+		float y = height / 2;
+		if (door.position == Door.Position.LEFT) {
+			x *= -1;
+			y = 0;
+		} else if (door.position == Door.Position.TOP) {
+			x = 0;
+		} else if (door.position == Door.Position.RIGHT) {
+			y = 0;
+		} else if (door.position == Door.Position.BOTTOM) {
+			x = 0;
+			y *= -1;
+		}
+		x *= 0.05f;
+		y *= 0.05f;
+		MapContainer.transform.Translate (
+			new Vector3(x, y, 0)
+		);
 	}
 }
  
