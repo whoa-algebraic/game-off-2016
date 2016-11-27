@@ -30,7 +30,7 @@ public class RoomNavigationManager : MonoBehaviour {
 			));
 		}
 	}
-
+		
     // Change room prefab
     public void ChangeRoom(int doorId) {
         // remove current room prefab from scene
@@ -59,10 +59,10 @@ public class RoomNavigationManager : MonoBehaviour {
 		} else if (door.position == Door.Position.RIGHT) {
 			adjustedDoorX -= 4;		
 		} else if (door.position == Door.Position.TOP) {
-			adjustedDoorX -= 3;
-			adjustedDoorY -= 4;
+			adjustedDoorY += 2;
 		} else {
-			adjustedDoorY += 4;
+			adjustedDoorX -= 4;
+			adjustedDoorY -= 4;
 		}
 		PlayerGameObject.transform.position = new Vector3(xPos + adjustedDoorX, yPos - adjustedDoorY, 0);
 		MoveMapOverlay (door, oldActiveRoom.width + map.activeRoom.width, oldActiveRoom.height + map.activeRoom.height);
@@ -105,6 +105,7 @@ public class RoomNavigationManager : MonoBehaviour {
 		MapContainer.transform.Translate (
 			new Vector3(x, y, 0)
 		);
+		Camera.main.GetComponent<CameraFollowPlayer> ().InitForRoomDimenstions (GetActiveRoomWidth (), GetActiveRoomHeight ());
 	}
 }
  
