@@ -1,22 +1,5 @@
 # whoa-algebraic / game-off-2016 [![Build Status](https://travis-ci.org/whoa-algebraic/game-off-2016.svg?branch=master)](https://travis-ci.org/whoa-algebraic/game-off-2016)
 
-## Dependencies
-### Unity 5.4.2
-#### Windows
-- [Unity Editor 64-bit](http://netstorage.unity3d.com/unity/b7e030c65c9b/Windows64EditorInstaller/UnitySetup64-5.4.2f2.exe)
-- [Standard Assets](http://netstorage.unity3d.com/unity/b7e030c65c9b/WindowsStandardAssetsInstaller/UnityStandardAssetsSetup-5.4.2f2.exe)
-
-#### Mac OS X
-- [Unity Editor 64-bit](http://netstorage.unity3d.com/unity/b7e030c65c9b/MacEditorInstaller/Unity-5.4.2f2.pkg)
-- [Standard Assets](http://netstorage.unity3d.com/unity/b7e030c65c9b/MacStandardAssetsInstaller/StandardAssets-5.4.2f2.pkg)
-
-Download location: [https://unity3d.com/get-unity/download/archive](https://unity3d.com/get-unity/download/archive)
-
-## Tiled Map Editor 0.17.1
-[Your free, easy to use and flexible tile map editor.](http://www.mapeditor.org/)
-
-Download location: [https://github.com/bjorn/tiled/releases/tag/v0.17.1](https://github.com/bjorn/tiled/releases/tag/v0.17.1)
-
 ## More Info
 Check out our [wiki](https://github.com/whoa-algebraic/game-off-2016/wiki).
 
