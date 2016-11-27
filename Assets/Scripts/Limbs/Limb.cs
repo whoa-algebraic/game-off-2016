@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using WhoaAlgebraic;
 
 public class Limb : MonoBehaviour {
 
@@ -10,8 +11,10 @@ public class Limb : MonoBehaviour {
 	private bool isActive;
 	private bool isDisabled;
 	private float CDTimer;
+    private int damageDoneByLimb = 15;
 
-	void Start() {
+
+    void Start() {
 		col = GetComponent<BoxCollider2D>();
 		m_Anim = transform.parent.GetComponent<Animator>();
 		col.enabled = false;
@@ -61,5 +64,17 @@ public class Limb : MonoBehaviour {
 	private void toggleCollider() {
 		col.enabled = !col.enabled;
 	}
+
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
+        // If the EnemyHealth component exist...
+        if (enemyHealth != null)
+        {
+            // ... the enemy should take damage.
+            enemyHealth.TakeDamage(damageDoneByLimb, this.transform.position);
+        }
+    }
 
 }
