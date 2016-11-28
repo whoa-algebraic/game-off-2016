@@ -15,15 +15,19 @@ public class CameraFollowPlayer : MonoBehaviour {
     private float maxTop;
     private float maxBottom;
 
-    void Start() {
-        float startingRoomWidth = Managers.RoomNavigationManager.GetActiveRoomWidth();
-        float startingRoomHeight = Managers.RoomNavigationManager.GetActiveRoomHeight();
+	void Start() {
+		InitForRoomDimenstions (
+			Managers.RoomNavigationManager.GetActiveRoomWidth (), 
+			Managers.RoomNavigationManager.GetActiveRoomHeight ()
+		);
+	}
 
-        maxLeft = ((startingRoomWidth / 2) * -1) + horizontalEdgeBuffer;
-        maxRight = (startingRoomWidth / 2) - horizontalEdgeBuffer;
-        maxTop = (startingRoomHeight / 2) - verticalEdgeBuffer;
-        maxBottom = ((startingRoomHeight / 2) * -1) + verticalEdgeBuffer;
-    }
+	public void InitForRoomDimenstions(float width, float height) {
+		maxLeft = ((width / 2) * -1) + horizontalEdgeBuffer;
+		maxRight = (width / 2) - horizontalEdgeBuffer;
+		maxTop = (height / 2) - verticalEdgeBuffer;
+		maxBottom = ((height / 2) * -1) + verticalEdgeBuffer;
+	}
         
 	void Update () {
         float playerX = PlayerCharacter.position.x;

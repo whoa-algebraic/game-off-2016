@@ -3,35 +3,40 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System;
 
 public class LevelFactory : MonoBehaviour {
 
 	public int roomCount;
+	public GameObject MapContainer;
+
 	Room startingPoint;
 	Room[] templates;
+	List<Room> rooms;
 
-	List<LineRenderer> mapLineRenderers = new List<LineRenderer>();
 	HashSet<int> drawnRoomIds = new HashSet<int> ();
 
 	LevelGenerator generator;
 
-	void Start() {
-		GenerateRooms (Managers.RoomNavigationManager.RoomPrefabs);
+	void Awake() {
+		MapContainer.SetActive (false);
+	}
+
+	public Map generate(GameObject[] prefabs) {
+		GenerateRooms (prefabs);
 		generator = new LevelGenerator (startingPoint, templates, roomCount);
-		generator.GenerateMap ();
+		rooms = generator.GenerateMap ().rooms;
+		startingPoint = rooms [0];
 		DrawMap ();
+		return new Map (startingPoint, rooms);
 	}
 
 	void Update() {
 		if (Input.GetKeyDown ("tab")) {
-			foreach (LineRenderer renderer in mapLineRenderers) {
-				renderer.enabled = true;
-			}
+			MapContainer.SetActive (true);
 		}
 		if (Input.GetKeyUp ("tab")) {
-			foreach (LineRenderer renderer in mapLineRenderers) {
-				renderer.enabled = false;
-			}
+			MapContainer.SetActive (false);
 		}
 	}
 
@@ -40,7 +45,7 @@ public class LevelFactory : MonoBehaviour {
 		for (int i = 0; i < prefabs.Length; i++) {
 			templates [i] = new Room (prefabs[i]);
 		}
-		startingPoint = templates [0];
+		startingPoint = templates [0].clone();
 	}
 
 	void DrawMap() {
@@ -48,33 +53,45 @@ public class LevelFactory : MonoBehaviour {
 	}
 
 	void DrawRoom(Room room) {
-		if (drawnRoomIds.Contains(room.roomId)) {
+		if (drawnRoomIds.Contains (room.roomId)) {
 			return;
 		}
 		drawnRoomIds.Add (room.roomId);
 
-		DrawLine (
-			new Vector3 (room.LeftX(), startingPoint.TopY(), 0), 
-			new Vector3 (room.LeftX(), startingPoint.BottomY(), 0), 
-			Color.gray
+		room.AddMapLine (
+			DrawLine (
+				new Vector3 (room.LeftX (), room.TopY (), 0), 
+				new Vector3 (room.LeftX (), room.BottomY (), 0), 
+				Color.gray,
+				"Room (" + room.roomId + ") left wall"
+			)
+		);
+
+		room.AddMapLine (
+			DrawLine (
+				new Vector3 (room.RightX(), room.TopY(), 0), 
+				new Vector3 (room.RightX(), room.BottomY(), 0), 
+				Color.gray,
+				"Room (" + room.roomId + ") right wall"
+			)
 		); 
 
-		DrawLine (
-			new Vector3 (room.RightX(), startingPoint.TopY(), 0), 
-			new Vector3 (room.RightX(), startingPoint.BottomY(), 0), 
-			Color.gray
+		room.AddMapLine (
+			DrawLine (
+				new Vector3 (room.LeftX(), room.TopY(), 0), 
+				new Vector3 (room.RightX(), room.TopY(), 0), 
+				Color.gray,
+				"Room (" + room.roomId + ") top wall"
+			)
 		); 
 
-		DrawLine (
-			new Vector3 (room.LeftX(), startingPoint.TopY(), 0), 
-			new Vector3 (room.RightX(), startingPoint.TopY(), 0), 
-			Color.gray
-		); 
-
-		DrawLine (
-			new Vector3 (room.LeftX(), startingPoint.BottomY(), 0), 
-			new Vector3 (room.RightX(), startingPoint.BottomY(), 0), 
-			Color.gray
+		room.AddMapLine (
+			DrawLine (
+				new Vector3 (room.LeftX(), room.BottomY(), 0), 
+				new Vector3 (room.RightX(), room.BottomY(), 0), 
+				Color.gray,
+				"Room (" + room.roomId + ") bottom wall"
+			)
 		); 
 
 		for (int i = 0; i < room.doors.Count; i++) {
@@ -87,29 +104,35 @@ public class LevelFactory : MonoBehaviour {
 				int doorEndY = doorStartY;
 
 				if (door.x == 0 || door.x == room.width) {
-					doorEndX += 5;
+					doorEndY += 2;
 				} else {
-					doorEndY += 5;
+					doorEndX += 2;
 				}
 
-				DrawLine (
-					new Vector3 (doorStartX, doorStartY, 0), 
-					new Vector3 (doorEndX, doorEndY, 0), 
-					Color.green
+				room.AddMapLine (
+					DrawLine (
+						new Vector3 (doorStartX, doorStartY, -1), 
+						new Vector3 (doorEndX, doorEndY, -1), 
+						Color.green,
+						"Room (" + room.roomId + ") door (" + door.doorId + ")"
+					)
 				); 
 
-				DrawRoom (door.connectedRoom);
+				DrawRoom (GetRoom(door.connectedRoomId));
 			}
 		}
 	}
 
-	void DrawLine(Vector3 start, Vector3 end, Color color)
-	{
-		start.Scale(new Vector3(0.1f, 0.1f, 1f));
-		end.Scale(new Vector3(0.1f, 0.1f, 1f));
+	LineRenderer DrawLine(Vector3 start, Vector3 end, Color color, String name)	{
+		start.y = -start.y;
+		end.y = -end.y;
+
+		start.Scale(new Vector3(0.05f, 0.05f, 0.05f));
+		end.Scale(new Vector3(0.05f, 0.05f, 0.5f));
 
 		GameObject myLine = new GameObject();
-		myLine.transform.position = start;
+		myLine.name = name;
+		myLine.transform.parent = MapContainer.transform;
 		myLine.AddComponent<LineRenderer>();
 		LineRenderer lr = myLine.GetComponent<LineRenderer>();
 		lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
@@ -118,8 +141,18 @@ public class LevelFactory : MonoBehaviour {
 		lr.SetPosition(0, start);
 		lr.SetPosition(1, end);
 		lr.enabled = false;
+		lr.useWorldSpace = false;
 
-		mapLineRenderers.Add (lr);
+		return lr;
 	}
 
+
+	Room GetRoom(int roomId) {
+		for (int i = 0; i < rooms.Count; i++) {
+			if (rooms [i].roomId == roomId) {
+				return rooms [i];
+			}
+		}
+		throw new Exception ("Room " + roomId + " not found");
+	}
 }

@@ -15,9 +15,13 @@ public class Room {
 
 	public int startX = 0;
 	public int startY = 0;
-	bool inMap = false;
 
 	public GameObject prefab;
+
+	List<LineRenderer> mapLines = new List<LineRenderer> ();
+
+	Room() {
+	} 
 
 	public Room(GameObject _prefab) {
 		doorsWithConnection = new HashSet<Door>();
@@ -35,17 +39,15 @@ public class Room {
 		foreach(GameObject doorObject in prefabDoors) {
 			Door door = new Door(
 				i,
-				((int) doorObject.transform.localPosition.x) + (width / 2),
-				((int) doorObject.transform.localPosition.y) + (height / 2)
+				((int) doorObject.transform.localPosition.x),
+				-((int) doorObject.transform.localPosition.y),
+				width,
+				height
 			);
 			doors[i] = door;
 			doorsWithoutConnection.Add(door);
 			i ++;
 		}
-	}
-
-	public void SetAsStartingPoint() {
-		inMap = true;
 	}
 
 	public void SetDoorAsConnected(Door door) {
@@ -71,18 +73,65 @@ public class Room {
 	}
 
 	public int BottomY() {
-		return startX + height;
+		return startY + height;
 	}
+
+	public Door GetDoor(int doorId) {
+		foreach (Door door in doors.Values) {
+			if (door.doorId == doorId) {
+				return door;
+			}
+		}
+		throw new Exception ("Door (" + doorId + ") not found");
+	}
+
+	public void AddMapLine(LineRenderer renderer) {
+		mapLines.Add(renderer);
+	}
+
+	public void SetRoomAsDiscovered() {
+		foreach (LineRenderer renderer in mapLines) {
+			renderer.enabled = true;
+		}
+	}
+
+
 		
+	public Room clone() {
+		Room room = new Room ();
+		room.doors = new Dictionary<int, Door> ();
+		int i = 1;
+		room.doorsWithConnection = new HashSet<Door>();
+		foreach (Door door in doorsWithConnection) {
+			Door doorClone = door.clone ();
+			room.doorsWithConnection.Add (doorClone);
+			room.doors[i] = doorClone;
+			i++;
+		}
+		room.doorsWithoutConnection = new HashSet<Door>();
+		foreach (Door door in doorsWithoutConnection) {
+			Door doorClone = door.clone ();
+			room.doorsWithoutConnection.Add (doorClone);
+			room.doors[i] = doorClone;
+			i++;
+		}
+		room.width = width;
+		room.height = height;
+		room.prefab = prefab;
+		room.startX = startX;
+		room.startY = startY;
+
+		return room;
+	}
 
 	public static void ConnectDoors(Room room, Door door, Room newRoom, Door otherDoor) {
 		if (room.doorsWithConnection.Contains (door)) {
 			throw new Exception ("Door is already connected to an other room");
 		}
-		door.connectedRoom = newRoom;
+		door.connectedRoomId = newRoom.roomId;
 		door.connectedDoorId = otherDoor.doorId;
 
-		otherDoor.connectedRoom = room;
+		otherDoor.connectedRoomId = room.roomId;
 		otherDoor.connectedDoorId = door.doorId;
 
 		room.SetDoorAsConnected (door);
@@ -91,29 +140,26 @@ public class Room {
 		newRoom.startX = room.startX + door.x - otherDoor.x;
 		newRoom.startY = room.startY + door.y - otherDoor.y;			
 
-		if (newRoom.roomId == 0) {
-			newRoom.roomId = room.roomId + 1;
-		}
 	}
 
 	public static bool AreRoomsOverlapping(Room room1, Room room2) {
-		if (room1.LeftX () <= room2.LeftX () && room1.RightX () >= room2.LeftX()) {
+		if (room1.LeftX () < room2.LeftX () && room1.RightX () > room2.LeftX() && room1.TopY () < room2.TopY () && room1.BottomY () > room2.TopY()) {
+			Debug.Log ("Top-Left corner is overlapping");
 			return true;
 		}
 
-		if (room1.LeftX () <= room2.RightX () && room1.RightX () >= room2.RightX()) {
+		if (room1.LeftX () < room2.LeftX () && room1.RightX () > room2.LeftX() && room1.BottomY () < room2.TopY () && room1.BottomY () > room2.BottomY()) {
+			Debug.Log ("Bottom-Left corner is overlapping");
 			return true;
 		}
 
-		if (room1.TopY () <= room2.TopY () && room1.BottomY () >= room2.TopY()) {
+		if (room1.LeftX () < room2.RightX () && room1.RightX () > room2.RightX() && room1.TopY () < room2.TopY () && room1.BottomY () > room2.TopY()) {
+			Debug.Log ("Top-Right corner is overlapping");
 			return true;
 		}
 
-		if (room1.TopY () <= room2.BottomY () && room1.BottomY () >= room2.BottomY()) {
-			return true;
-		}
-
-		if (room1.LeftX () >= room2.LeftX () && room1.RightX () <= room2.RightX () && room1.TopY () >= room2.TopY () && room1.BottomY () <= room2.BottomY ()) {
+		if (room1.LeftX () < room2.RightX () && room1.RightX () > room2.RightX() && room1.TopY () < room2.BottomY () && room1.BottomY () > room2.BottomY()) {
+			Debug.Log ("Bottom-Right corner is overlapping");
 			return true;
 		}
 
@@ -126,5 +172,9 @@ public class Room {
 			bounds.Encapsulate(renderer.bounds);
 		}
 		return bounds;
+	}
+
+	public override string ToString() {
+		return base.ToString() + "(" + roomId + "): " + width + "x" + height + " (" + startX + "," + startY + ")";
 	}
 }
