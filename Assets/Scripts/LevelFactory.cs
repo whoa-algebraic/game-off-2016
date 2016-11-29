@@ -9,6 +9,7 @@ public class LevelFactory : MonoBehaviour {
 
 	public int roomCount;
 	public GameObject MapContainer;
+	public GameObject MapCurrentPos;
 
 	Room startingPoint;
 	Room[] templates;
@@ -19,7 +20,9 @@ public class LevelFactory : MonoBehaviour {
 	LevelGenerator generator;
 
 	void Awake() {
+		Debug.Log ("LevelFactory Awake");
 		MapContainer.SetActive (false);
+		MapCurrentPos.SetActive (false);
 	}
 
 	public Map generate(GameObject[] prefabs) {
@@ -34,9 +37,11 @@ public class LevelFactory : MonoBehaviour {
 	void Update() {
 		if (Input.GetKeyDown ("tab")) {
 			MapContainer.SetActive (true);
+			MapCurrentPos.SetActive (true);
 		}
 		if (Input.GetKeyUp ("tab")) {
 			MapContainer.SetActive (false);
+			MapCurrentPos.SetActive (false);
 		}
 	}
 

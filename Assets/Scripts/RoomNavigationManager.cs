@@ -2,6 +2,7 @@
 using System.Collections;
 using Tiled2Unity;
 using System.Runtime.CompilerServices;
+using System;
 
 public class RoomNavigationManager : MonoBehaviour {
     public GameObject PlayerGameObject;
@@ -15,13 +16,16 @@ public class RoomNavigationManager : MonoBehaviour {
 	private bool inited = false;
 
     void Awake() {
+		Debug.Log ("RoomNavigationManager Awake");
 		init ();
 	}
 
 	[MethodImpl(MethodImplOptions.Synchronized)]
 	public void init() {
 		if (!inited) {
+			long milliseconds = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 			map = GetComponent<LevelFactory> ().generate (RoomPrefabs);
+			Debug.Log ("Map generated in " + (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - milliseconds) + "ms");
 			SetActiveRoom (map.activeRoom.prefab);
 			MapContainer.transform.Translate (new Vector3 (
 				-map.activeRoom.width / 2 * 0.05f,

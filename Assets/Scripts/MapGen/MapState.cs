@@ -2,23 +2,24 @@
 using System.Collections.Generic;
 
 public class MapState {
-
 	private static Random rnd = new Random();
 
 	public List<Room> rooms;
 	List<RoomDoor> openDoors;
 
-	public List<RoomDoor> applicableConnections;
+	public List<ApplicableOperator> applicableConnections;
 	public RoomDoor lastDoor;
 
 	MapState() {
 		rooms = new List<Room> ();
 		openDoors = new List<RoomDoor> ();
+		applicableConnections = new List<ApplicableOperator> ();
 	}
 
 	public MapState (Room firstRoom) {
 		rooms = new List<Room> ();
 		openDoors = new List<RoomDoor> ();
+		applicableConnections = new List<ApplicableOperator> ();
 		AddRoom (firstRoom);
 	}
 
@@ -38,12 +39,16 @@ public class MapState {
 		}
 	}
 
-	public RoomDoor RandomOpenDoor() {
-		int index = rnd.Next (openDoors.Count);
-		RoomDoor roomDoor = openDoors[index];
-		lastDoor = roomDoor;
-		openDoors.Remove (roomDoor);
-		return roomDoor;
+	public ApplicableOperator getRandomOperator() {
+		if (applicableConnections.Count == 0) {
+			return null;
+		}
+		int index = rnd.Next (applicableConnections.Count);
+		return applicableConnections[index];
+	}
+
+	public List<RoomDoor> GetOpenDoors() {
+		return openDoors;
 	}
 
 	public void ReAddLastDoor() {
@@ -59,9 +64,14 @@ public class MapState {
 		return state;
 	}
 
-	public MapState Apply(RoomDoor roomDoor, RoomDoor otherRoom) {
+	public MapState Apply(ApplicableOperator op) {
+		this.applicableConnections.Remove (op);
+		RoomDoor roomDoor = op.sourceRoomDoor;
+		RoomDoor otherRoom = op.connectionRoomDoor;
+
+		openDoors.Remove (roomDoor);
+		lastDoor = roomDoor;
 		otherRoom.room.roomId = rooms.Count;
-		this.applicableConnections.Remove (otherRoom);
 		MapState newState = new MapState ();
 		foreach (Room room in rooms) {
 			if (room.roomId == roomDoor.room.roomId) {

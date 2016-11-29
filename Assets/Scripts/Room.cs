@@ -144,22 +144,22 @@ public class Room {
 
 	public static bool AreRoomsOverlapping(Room room1, Room room2) {
 		if (room1.LeftX () < room2.LeftX () && room1.RightX () > room2.LeftX() && room1.TopY () < room2.TopY () && room1.BottomY () > room2.TopY()) {
-			Debug.Log ("Top-Left corner is overlapping");
+//			Debug.Log ("Top-Left corner is overlapping");
 			return true;
 		}
 
 		if (room1.LeftX () < room2.LeftX () && room1.RightX () > room2.LeftX() && room1.BottomY () < room2.TopY () && room1.BottomY () > room2.BottomY()) {
-			Debug.Log ("Bottom-Left corner is overlapping");
+//			Debug.Log ("Bottom-Left corner is overlapping");
 			return true;
 		}
 
 		if (room1.LeftX () < room2.RightX () && room1.RightX () > room2.RightX() && room1.TopY () < room2.TopY () && room1.BottomY () > room2.TopY()) {
-			Debug.Log ("Top-Right corner is overlapping");
+//			Debug.Log ("Top-Right corner is overlapping");
 			return true;
 		}
 
 		if (room1.LeftX () < room2.RightX () && room1.RightX () > room2.RightX() && room1.TopY () < room2.BottomY () && room1.BottomY () > room2.BottomY()) {
-			Debug.Log ("Bottom-Right corner is overlapping");
+//			Debug.Log ("Bottom-Right corner is overlapping");
 			return true;
 		}
 

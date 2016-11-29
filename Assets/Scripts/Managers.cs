@@ -7,6 +7,7 @@ public class Managers : MonoBehaviour {
 	public static LevelFactory LevelFactory { get; set; }
 
 	void Awake () {
+		Debug.Log ("Managers Awake");
         RoomNavigationManager = GetComponent<RoomNavigationManager>();
 		LimbManager = GetComponent<LimbManager>();
 		LevelFactory = GetComponent<LevelFactory> ();

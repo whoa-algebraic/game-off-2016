@@ -23,6 +23,7 @@ public class LevelGenerator {
 		startingPoint = _startingPoints;
 		mapStates.Add(new MapState(startingPoint));
 		actualState = mapStates [0];
+		GenerateApplicableOperators ();
 	}
 
 	public MapState GenerateMap() {
@@ -32,32 +33,31 @@ public class LevelGenerator {
 
 
 	void step() {
-		Debug.Log ("Step forward");
-		Debug.Log ("Actual state: " + actualState);
+//		Debug.Log ("Step forward");
+//		Debug.Log ("Actual state: " + actualState);
 		counter++;
 		if (counter == 10) {
 			throw new Exception ("StackOverflow");
 		}
-		RoomDoor randomOpenDoor = actualState.RandomOpenDoor ();
-		Debug.Log ("Searching connection for [Room: " + randomOpenDoor.room.roomId + ", Door: (" + randomOpenDoor.door.doorId + ") " + randomOpenDoor.door.position + "]");
-		List<RoomDoor> applicableConnections = GetApplicableConnections (randomOpenDoor);
-		if (applicableConnections.Count == 0) {
+		ApplicableOperator chosenOperator = actualState.getRandomOperator ();
+		if (chosenOperator == null) {
 			stepBack ();
 		} else {
-			actualState.applicableConnections = applicableConnections;
-			actualState = actualState.Apply (randomOpenDoor, actualState.applicableConnections [0]);
+//		Debug.Log ("Searching connection for [Room: " + randomOpenDoor.room.roomId + ", Door: (" + randomOpenDoor.door.doorId + ") " + randomOpenDoor.door.position + "]");
+			actualState = actualState.Apply (chosenOperator);
 			mapStates.Add (actualState);
 
-			if (IsWinningState()) {
+			if (IsWinningState ()) {
 				winningState = actualState;
 				return;
 			}
+			GenerateApplicableOperators ();
 		}
 		step ();
 	}
 
 	void stepBack() {
-		Debug.Log ("Step back");
+//		Debug.Log ("Step back");
 		counter--;
 		mapStates.RemoveAt (mapStates.Count - 1);
 		if (mapStates.Count == 0) {
@@ -65,6 +65,20 @@ public class LevelGenerator {
 		}
 		actualState = mapStates [mapStates.Count - 1];
 		actualState.ReAddLastDoor ();
+	}
+
+	void GenerateApplicableOperators() {
+		foreach (RoomDoor openDoor in actualState.GetOpenDoors ()) {
+			List<RoomDoor> applicableConnections = GetApplicableConnections (openDoor);
+			foreach (RoomDoor connectionRoomDoor in applicableConnections) {
+				actualState.applicableConnections.Add (
+					new ApplicableOperator (
+						openDoor,
+						connectionRoomDoor
+					)
+				);
+			}
+		}
 	}
 
 	bool isRoomApplicable(RoomDoor roomDoor, Room newRoom) {
@@ -98,7 +112,7 @@ public class LevelGenerator {
 				Room actRoom = act.clone();
 				foreach (Door door in actRoom.doors.Values) {
 					if (isDoorApplicable(openRoomDoor, actRoom, door)) {
-						Debug.Log ("Applicable room: [Room: " + actRoom.width + "x" + actRoom.height + ", Door: " + door.position + "]");
+//						Debug.Log ("Applicable room: [Room: " + actRoom.width + "x" + actRoom.height + ", Door: " + door.position + "]");
 						applicableConnections.Add (new RoomDoor (actRoom, door));
 					}
 				}

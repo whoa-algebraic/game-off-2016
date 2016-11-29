@@ -16,6 +16,7 @@ public class CameraFollowPlayer : MonoBehaviour {
     private float maxBottom;
 
 	void Start() {
+		Debug.Log ("CameraFollowPlayer Start");
 		InitForRoomDimenstions (
 			Managers.RoomNavigationManager.GetActiveRoomWidth (), 
 			Managers.RoomNavigationManager.GetActiveRoomHeight ()
